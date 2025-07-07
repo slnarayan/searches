@@ -1,0 +1,1 @@
+The project implements MCP servers for web searches using Tivaly and library searches.  It wraps up wthe MCP server with fastAPI.
