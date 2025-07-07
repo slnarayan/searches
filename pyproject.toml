@@ -1,0 +1,14 @@
+[project]
+name = "documentation"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.10.1",
+    "beautifulsoup4",
+    "tavily-python",
+    "fastapi>=0.115.14",
+    "uvicorn>=0.35.0",
+]
