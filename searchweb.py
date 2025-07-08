@@ -7,7 +7,7 @@ from typing import List, Dict
 load_dotenv()
 PORT = os.getenv("PORT", 10000)
 
-tavily_client = TavilyClient(os.environ["TAVILY_API_KEY"], port=PORT)
+tavily_client = TavilyClient(os.environ["TAVILY_API_KEY"])
 
 mcp = FastMCP(name="SearchWeb", stateless_http=True)
 
