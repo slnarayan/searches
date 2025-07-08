@@ -69,8 +69,7 @@ async def search_lib(query:str, library:str):
     for result in results["organic"]:
         text += await fetch_url(result["link"])
     return text
-'''
+
 if __name__ == "__main__":
 #    mcp.run(transport="stdio")
     mcp.run(transport="streamable-http")
-'''

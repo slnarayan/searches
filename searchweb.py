@@ -27,3 +27,7 @@ async def search_web( query:str ) -> List[Dict]:
         return response["results"]
     except:
         return "No results found"
+    
+if __name__ == "__main__":
+#    mcp.run(transport="stdio")
+    mcp.run(transport="streamable-http")
