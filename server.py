@@ -2,6 +2,11 @@ import contextlib
 from fastapi import FastAPI, Request, Response
 from searchweb import mcp as search_web
 from searchlib import mcp as search_lib
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+bport = int(os.environ["PORT"])
 
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -17,5 +22,6 @@ app.mount("/searchlib", search_lib.streamable_http_app())
 
 if __name__ == "__main__":
     import uvicorn
-#    uvicorn.run(app, host="0.0.0.0", port=8001)
-    uvicorn.run(app)
+    print(bport)
+#    uvicorn.run(app, host="0.0.0.0", port=bport)
+    uvicorn.run(app, port = bport)
