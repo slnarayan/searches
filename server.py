@@ -23,5 +23,4 @@ app.mount("/searchlib", search_lib.streamable_http_app())
 if __name__ == "__main__":
     import uvicorn
     print(bport)
-#    uvicorn.run(app, host="0.0.0.0", port=bport)
-    uvicorn.run(app, port = bport)
+    uvicorn.run(app, host="0.0.0.0", port = bport)
