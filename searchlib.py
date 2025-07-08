@@ -1,5 +1,4 @@
 from mcp.server.fastmcp import FastMCP
-from tavily import TavilyClient
 from dotenv import load_dotenv
 import httpx
 import json
@@ -8,7 +7,6 @@ from bs4 import BeautifulSoup
 from typing import List, Dict  
 
 load_dotenv()
-tavily_client = TavilyClient(os.environ["TAVILY_API_KEY"])
 
 USER_AGENT = "docs-app/1.0"
 SERPER_URL = "https://google.serper.dev/search"
@@ -19,7 +17,7 @@ docs_urls = {
     "openai": "platform.openai.com/docs"
 }
 
-async def search_docs(query: str) -> dict | None:
+async def search_docs(query: str) -> Dict | None:
     payload = json.dumps({"q": query, "num": 2})
     headers = {
         "Content-Type": "application/json",
@@ -43,29 +41,11 @@ async def fetch_url(url: str):
         except httpx.TimeoutException:
             return "Timeout error"
         
-#mcp = FastMCP("docs")
 #mcp = FastMCP("search-docs", host="0.0.0.0", port=8001 )
-mcp = FastMCP("search")
-
-@mcp.tool(description="A tool to search the web")
-async def search_web( query:str ) -> List[Dict]:
-    """
-    Use the tool to search the web for information
-
-    Args:
-        query: The search query
-
-    Returns:
-        The search results.
-    """
-    try:
-        response = tavily_client.search(query)
-        return response("results")
-    except:
-        return "No results found"
+mcp = FastMCP(name="SearchLib", stateless_http=True)
 
 @mcp.tool(description="A tool to search the library")
-async def get_docs(query:str, library:str):
+async def search_lib(query:str, library:str):
     """
     Search the docs for a given query and library
     Supports langchain, openai, and llama-index
@@ -89,7 +69,8 @@ async def get_docs(query:str, library:str):
     for result in results["organic"]:
         text += await fetch_url(result["link"])
     return text
-
+'''
 if __name__ == "__main__":
 #    mcp.run(transport="stdio")
     mcp.run(transport="streamable-http")
+'''

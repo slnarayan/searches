@@ -1,20 +1,19 @@
-from fastapi import FastAPI, Request, Response
-#from main import mcp as search_web
-#from main import mcp as get_docs
-from main import mcp
 import contextlib
+from fastapi import FastAPI, Request, Response
+from searchweb import mcp as search_web
+from searchlib import mcp as search_lib
 
 @contextlib.asynccontextmanager
 async def lifespan(app: FastAPI):
-    async with contextlib.AsyncExitStack() as stack:    
-        await stack.enter_async_context(mcp.session_manager.run())
- #       await stack.enter_async_context(get_docs.session_manager.run())
+    async with contextlib.AsyncExitStack() as stack:  
+        await stack.enter_async_context(search_web.session_manager.run())  
+        await stack.enter_async_context(search_lib.session_manager.run())
         yield
 
 app = FastAPI(lifespan=lifespan)
-#app.mount("/search", search_web.streamable_http_app())
-#app.mount("/get_docs", get_docs.streamable_http_app())
-app.mount("/", mcp.streamable_http_app())
+app.mount("/searchweb", search_web.streamable_http_app())
+app.mount("/searchlib", search_lib.streamable_http_app())
+#app.mount("/", mcp.streamable_http_app())
 
 if __name__ == "__main__":
     import uvicorn
